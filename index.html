@@ -122,6 +122,9 @@
                 if (index === 0) img.classList.add("active");
                 container.appendChild(img);
             });
+        
+            // 썸네일 스크롤을 맨 왼쪽으로 이동
+            document.querySelector(".thumbnail-wrapper").scrollLeft = 0;
         }
         
         function autoSlide() {
