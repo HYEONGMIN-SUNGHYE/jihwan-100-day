@@ -142,20 +142,21 @@
             }
             thumbnails[slideIndex].classList.add("active");
         
-            // 첫 번째 사진이면 스크롤 맨 왼쪽으로 이동
+            // 첫 번째 사진이면 스크롤을 맨 왼쪽으로 이동
             if (slideIndex === 0) {
                 thumbnailWrapper.scrollLeft = 0;
             } else {
                 let activeThumbnail = thumbnails[slideIndex];
-                let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetLeft;
-                thumbnailWrapper.scrollLeft = offset;
+                let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetLeft - (thumbnailWrapper.clientWidth / 2) + (activeThumbnail.clientWidth / 2);
+                thumbnailWrapper.scrollTo({ left: offset, behavior: "smooth" });
             }
         }
 
-        
+                
         function createThumbnails() {
             const container = document.getElementById("thumbnail-container");
             container.innerHTML = "";
+        
             slides.forEach((src, index) => {
                 const img = document.createElement("img");
                 img.classList.add("thumbnail");
@@ -165,10 +166,10 @@
                 container.appendChild(img);
             });
         
-            // 페이지 로딩 후 썸네일 스크롤을 맨 왼쪽으로 초기화
+            // 페이지 로딩 후 썸네일 스크롤을 강제 초기화
             setTimeout(() => {
-                document.querySelector(".thumbnail-wrapper").scrollLeft = 0;
-            }, 100);
+                document.querySelector(".thumbnail-wrapper").scrollTo({ left: 0, behavior: "instant" });
+            }, 200);
         }
 
 
