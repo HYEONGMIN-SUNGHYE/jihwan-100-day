@@ -142,15 +142,16 @@
             }
             thumbnails[slideIndex].classList.add("active");
         
-            // 썸네일이 첫 번째 사진이면 스크롤 맨 왼쪽으로 이동
+            // 첫 번째 사진이면 스크롤 맨 왼쪽으로 이동
             if (slideIndex === 0) {
                 thumbnailWrapper.scrollLeft = 0;
             } else {
                 let activeThumbnail = thumbnails[slideIndex];
-                let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetWidth / 2 + activeThumbnail.offsetWidth / 2;
-                thumbnailWrapper.scrollLeft = Math.max(0, offset);
+                let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetLeft;
+                thumbnailWrapper.scrollLeft = offset;
             }
         }
+
         
         function createThumbnails() {
             const container = document.getElementById("thumbnail-container");
@@ -164,11 +165,12 @@
                 container.appendChild(img);
             });
         
-            // 페이지 로딩 후 첫 번째 썸네일이 확실히 보이도록 설정
+            // 페이지 로딩 후 썸네일 스크롤을 맨 왼쪽으로 초기화
             setTimeout(() => {
                 document.querySelector(".thumbnail-wrapper").scrollLeft = 0;
             }, 100);
         }
+
 
         function autoSlide() {
             slideIndex = (slideIndex + 1) % slides.length;
