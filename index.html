@@ -143,13 +143,13 @@
             thumbnails[slideIndex].classList.add("active");
         
             // 썸네일이 첫 번째 사진이면 스크롤 맨 왼쪽으로 이동
-            if (slideIndex === 0) {
-                thumbnailWrapper.scrollLeft = 0;
-            } else {
-                // 선택된 썸네일이 가운데로 오도록 조정
-                let activeThumbnail = thumbnails[slideIndex];
-                thumbnailWrapper.scrollLeft = activeThumbnail.offsetLeft - thumbnailWrapper.offsetWidth / 2 + activeThumbnail.offsetWidth / 2;
-            }
+            //if (slideIndex === 0) {
+            //    thumbnailWrapper.scrollLeft = 0;
+            //} else {
+            //    // 선택된 썸네일이 가운데로 오도록 조정
+            //    let activeThumbnail = thumbnails[slideIndex];
+            //    thumbnailWrapper.scrollLeft = activeThumbnail.offsetLeft - thumbnailWrapper.offsetWidth / 2 + activeThumbnail.offsetWidth / 2;
+            //}
         }
         
         function createThumbnails() {
