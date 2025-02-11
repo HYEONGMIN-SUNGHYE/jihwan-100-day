@@ -142,14 +142,21 @@
             }
             thumbnails[slideIndex].classList.add("active");
         
-            // 썸네일 스크롤 조정 (첫 번째 썸네일부터 보이도록)
-            let activeThumbnail = thumbnails[slideIndex];
-            let wrapperLeft = thumbnailWrapper.getBoundingClientRect().left;
-            let thumbLeft = activeThumbnail.getBoundingClientRect().left;
-            let offset = thumbLeft - wrapperLeft - (thumbnailWrapper.clientWidth / 2) + (activeThumbnail.clientWidth / 2);
+            // 썸네일 스크롤 조정
+            setTimeout(() => {
+                if (slideIndex === 0) {
+                    thumbnailWrapper.scrollLeft = 0;
+                } else {
+                    let activeThumbnail = thumbnails[slideIndex];
+                    let wrapperLeft = thumbnailWrapper.getBoundingClientRect().left;
+                    let thumbLeft = activeThumbnail.getBoundingClientRect().left;
+                    let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetLeft - thumbnailWrapper.clientWidth / 2 + activeThumbnail.clientWidth / 2;
         
-            thumbnailWrapper.scrollTo({ left: thumbnailWrapper.scrollLeft + offset, behavior: "smooth" });
+                    thumbnailWrapper.scrollTo({ left: offset, behavior: "smooth" });
+                }
+            }, 50);
         }
+
 
                 
         function createThumbnails() {
