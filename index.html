@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아기 백일 잔치 초대장</title>
+    <style>
+        body { font-family: 'Jua', sans-serif; text-align: center; margin: 0; padding: 0; background-color: #f0f8ff; background-image: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png'); }
+        .container { max-width: 650px; margin: auto; padding: 30px; background: #ffffff; box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 10px; }
+        h1 { color: #37474f; font-family: 'Jua', sans-serif; font-weight: bold; }
+        .info { margin: 20px 0; font-size: 18px; color: #455a64; font-family: 'Jua', sans-serif; }
+        .button { display: inline-block; padding: 12px 24px; background: #6fa3ef; border-radius: 5px; font-size: 18px; color: white; text-decoration: none; font-weight: bold; }
+        .decor { font-size: 24px; color: #0277bd; }
+        
+        /* 슬라이드 스타일 */
+        .slideshow-container { position: relative; max-width: 100%; margin: auto; overflow: hidden; border-radius: 10px; }
+        .slides { display: none; width: 100%; border-radius: 10px; }
+        .active-slide { display: block; }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 10px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        
+        /* 썸네일 스타일 */
+        .thumbnail-container { display: flex; justify-content: center; margin-top: 10px; }
+        .thumbnail { width: 60px; height: 40px; margin: 5px; cursor: pointer; border-radius: 5px; opacity: 0.6; transition: 0.3s; }
+        .thumbnail:hover, .thumbnail.active { opacity: 1; border: 2px solid #0277bd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 우리 아기 백일 잔치 🎂</h1>
+        <p class="decor" style="font-family: 'Jua', sans-serif; font-size: 26px; font-weight: bold; color: #455a64;">소중한 순간을 함께해주세요!</p>
+        <div class="info">
+            <p><strong>📅 날짜:</strong> 2025년 3월 15일</p>
+            <p><strong>📍 장소:</strong> 서울특별시 강남구 사랑홀</p>
+        </div>
+        <h2>👶 우리 아기의 특별한 순간 💕</h2>
+        
+        <div class="slideshow-container">
+            <img id="main-slide" class="slides active-slide" src="images/photo1.jpg" alt="아기 사진">
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+        
+        <div class="thumbnail-container" id="thumbnail-container"></div>
+        
+        <h3>🚗 오시는 길 안내</h3>
+        <p>지하철 2호선 강남역 3번 출구에서 도보 10분 거리</p>
+        <p>주차 가능 (건물 내 주차장 이용)</p>
+        
+        <p><a href="https://maps.google.com" class="button">📍 지도 보기</a></p>
+    </div>
+    
+    <script>
+        let slideIndex = 0;
+        let slides = [
+            "images/photo1.jpg",
+            "images/photo2.jpg",
+            "images/photo3.jpg",
+            "images/photo4.jpg"
+        ];
+        let slideInterval;
+
+        function changeSlide(n) {
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            updateSlide();
+            resetInterval();
+        }
+        
+        function setSlide(n) {
+            slideIndex = n;
+            updateSlide();
+            resetInterval();
+        }
+        
+        function updateSlide() {
+            document.getElementById("main-slide").src = slides[slideIndex];
+            let thumbnails = document.getElementsByClassName("thumbnail");
+            for (let i = 0; i < thumbnails.length; i++) {
+                thumbnails[i].classList.remove("active");
+            }
+            thumbnails[slideIndex].classList.add("active");
+        }
+
+        function createThumbnails() {
+            const container = document.getElementById("thumbnail-container");
+            container.innerHTML = "";
+            slides.forEach((src, index) => {
+                const img = document.createElement("img");
+                img.classList.add("thumbnail");
+                img.src = src;
+                img.onclick = () => setSlide(index);
+                if (index === 0) img.classList.add("active");
+                container.appendChild(img);
+            });
+        }
+        
+        function autoSlide() {
+            slideIndex = (slideIndex + 1) % slides.length;
+            updateSlide();
+        }
+        
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(autoSlide, 5000);
+        }
+        
+        createThumbnails();
+        slideInterval = setInterval(autoSlide, 5000);
+    </script>
+</body>
+</html>
