@@ -142,21 +142,19 @@
             }
             thumbnails[slideIndex].classList.add("active");
         
-            // 첫 번째 사진이면 스크롤을 맨 왼쪽으로 이동
-            if (slideIndex === 0) {
-                thumbnailWrapper.scrollLeft = 0;
-            } else {
-                let activeThumbnail = thumbnails[slideIndex];
-                let offset = activeThumbnail.offsetLeft - thumbnailWrapper.offsetLeft - (thumbnailWrapper.clientWidth / 2) + (activeThumbnail.clientWidth / 2);
-                thumbnailWrapper.scrollTo({ left: offset, behavior: "smooth" });
-            }
+            // 썸네일 스크롤 조정 (첫 번째 썸네일부터 보이도록)
+            let activeThumbnail = thumbnails[slideIndex];
+            let wrapperLeft = thumbnailWrapper.getBoundingClientRect().left;
+            let thumbLeft = activeThumbnail.getBoundingClientRect().left;
+            let offset = thumbLeft - wrapperLeft - (thumbnailWrapper.clientWidth / 2) + (activeThumbnail.clientWidth / 2);
+        
+            thumbnailWrapper.scrollTo({ left: thumbnailWrapper.scrollLeft + offset, behavior: "smooth" });
         }
 
                 
         function createThumbnails() {
             const container = document.getElementById("thumbnail-container");
             container.innerHTML = "";
-        
             slides.forEach((src, index) => {
                 const img = document.createElement("img");
                 img.classList.add("thumbnail");
@@ -166,9 +164,9 @@
                 container.appendChild(img);
             });
         
-            // 페이지 로딩 후 썸네일 스크롤을 강제 초기화
+            // 썸네일이 1번부터 제대로 정렬되도록 초기 스크롤 설정
             setTimeout(() => {
-                document.querySelector(".thumbnail-wrapper").scrollTo({ left: 0, behavior: "instant" });
+                document.querySelector(".thumbnail-wrapper").scrollLeft = 0;
             }, 200);
         }
 
