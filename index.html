@@ -66,8 +66,8 @@
         </div>
         
         <h3>🚗 오시는 길 안내</h3>
-        <p>지하철 2호선 강남역 3번 출구에서 도보 10분 거리</p>
-        <p>주차 가능 (건물 내 주차장 이용)</p>
+        <p>대전시 유성구 엑스포로 448(전민동)</p>
+        <p>엑스포아파트 208동 402호</p>
         
         <p><a href="https://maps.google.com" class="button">📍 지도 보기</a></p>
     </div>
@@ -90,26 +90,26 @@
         }
         
         function updateSlide() {
-            let mainSlide = document.getElementById("main-slide");
+            document.getElementById("main-slide").src = slides[slideIndex];
+        
             let thumbnails = document.getElementsByClassName("thumbnail");
-        
-            if (thumbnails.length > 0) {
-                for (let i = 0; i < thumbnails.length; i++) {
-                    thumbnails[i].classList.remove("active");
-                }
-                thumbnails[slideIndex].classList.add("active");
-            }
-        
-            mainSlide.src = slides[slideIndex];
-        
-            // 썸네일이 보이도록 스크롤 조정
             let thumbnailWrapper = document.querySelector(".thumbnail-wrapper");
-            let activeThumbnail = document.getElementsByClassName("active")[0];
-            if (activeThumbnail) {
+        
+            // 모든 썸네일의 active 제거 후 현재 슬라이드에 active 추가
+            for (let i = 0; i < thumbnails.length; i++) {
+                thumbnails[i].classList.remove("active");
+            }
+            thumbnails[slideIndex].classList.add("active");
+        
+            // 썸네일이 1번이면 스크롤 맨 왼쪽으로 이동
+            if (slideIndex === 0) {
+                thumbnailWrapper.scrollLeft = 0;
+            } else {
+                // 선택된 썸네일을 중앙에 맞추기
+                let activeThumbnail = thumbnails[slideIndex];
                 thumbnailWrapper.scrollLeft = activeThumbnail.offsetLeft - thumbnailWrapper.offsetWidth / 2 + activeThumbnail.offsetWidth / 2;
             }
         }
-
 
         function createThumbnails() {
             const container = document.getElementById("thumbnail-container");
